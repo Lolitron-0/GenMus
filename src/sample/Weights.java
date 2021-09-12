@@ -76,7 +76,7 @@ public class Weights
 
 
 
-    public static void generate(int n1,int n2,int ton) throws MidiUnavailableException, InterruptedException {
+    public static void generate(int n1,int n2,int ton,int phrase) throws MidiUnavailableException, InterruptedException {
         Synthesizer synth = MidiSystem.getSynthesizer();
         synth.open();
         final MidiChannel[] channels = synth.getChannels();
@@ -92,7 +92,7 @@ public class Weights
             if(Math.random()<0.5) channels[0].noteOn(tr+ton,127);
             channels[0].noteOn(tr+3+ton,127);
             if(Math.random()<0.2) channels[0].noteOn(tr+8+ton,127);
-            if (i%16==0 && i!=0)
+            if (i%phrase==0 && i!=0)
                 Thread.sleep(1000);
             else if(i%2==0)
                 Thread.sleep(350);

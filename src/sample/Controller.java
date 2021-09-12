@@ -24,7 +24,7 @@ public class Controller implements Initializable {
 
 
     public void onClick(ActionEvent actionEvent) throws InterruptedException, MidiUnavailableException {
-        Weights.generate((int)n1Choose.getValue(),(int)n2Choose.getValue(),(int)scaleChooser.getValue());
+        Weights.generate((int)n1Choose.getValue(),(int)n2Choose.getValue(),(int)scaleChooser.getValue(),16);
     }
 
     @Override
