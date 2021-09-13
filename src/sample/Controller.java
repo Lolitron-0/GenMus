@@ -12,19 +12,17 @@ import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
-    public ChoiceBox n1Choose;
+    public ChoiceBox<Integer> n1Choose;
     public Button btnGener;
     public Slider scaleChooser;
-    public ChoiceBox n2Choose;
+    public ChoiceBox<Integer> n2Choose;
 
 
     public void onClick(ActionEvent actionEvent) throws InterruptedException, MidiUnavailableException {
-        Weights.generate((int)n1Choose.getValue(),(int)n2Choose.getValue(),(int)scaleChooser.getValue(),16);
+        Weights.generate(n1Choose.getValue(), n2Choose.getValue(),(int)scaleChooser.getValue(),16);
     }
 
     @Override
@@ -36,11 +34,11 @@ public class Controller implements Initializable {
         n2Choose.setValue(cursors.get(0));
         System.out.println(n1Choose.getValue());
         try {
-            Weights.learnFromSong("C:\\Users\\ClarVik\\source\\repos\\src\\com\\company\\New MIDI File 1.mid");
-            Weights.learnFromSong("C:\\Users\\ClarVik\\source\\repos\\src\\com\\company\\New MIDI File 2.mid");
-            Weights.learnFromSong("C:\\Users\\ClarVik\\source\\repos\\src\\com\\company\\New MIDI File 3.mid");
-            Weights.learnFromSong("C:\\Users\\ClarVik\\source\\repos\\src\\com\\company\\New MIDI File 4.mid");
-            Weights.learnFromSong("C:\\Users\\ClarVik\\source\\repos\\src\\com\\company\\New MIDI File 5.mid");
+            Weights.learnFromSong("out/production/AAAAAAAAA/sample/New MIDI File 1.mid");
+            Weights.learnFromSong("out/production/AAAAAAAAA/sample/New MIDI File 2.mid");
+            Weights.learnFromSong("out/production/AAAAAAAAA/sample/New MIDI File 3.mid");
+            Weights.learnFromSong("out/production/AAAAAAAAA/sample/New MIDI File 4.mid");
+            Weights.learnFromSong("out/production/AAAAAAAAA/sample/New MIDI File 5.mid");
         } catch (InvalidMidiDataException | IOException e) {
             e.printStackTrace();
         }
