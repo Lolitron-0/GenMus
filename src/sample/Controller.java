@@ -34,11 +34,11 @@ public class Controller implements Initializable {
         n2Choose.setValue(cursors.get(0));
         System.out.println(n1Choose.getValue());
         try {
-            Weights.learnFromSong("out/production/AAAAAAAAA/sample/New MIDI File 1.mid");
-            Weights.learnFromSong("out/production/AAAAAAAAA/sample/New MIDI File 2.mid");
-            Weights.learnFromSong("out/production/AAAAAAAAA/sample/New MIDI File 3.mid");
-            Weights.learnFromSong("out/production/AAAAAAAAA/sample/New MIDI File 4.mid");
-            Weights.learnFromSong("out/production/AAAAAAAAA/sample/New MIDI File 5.mid");
+            Weights.learnFromSong("src/sample/New MIDI File 1.mid");
+            Weights.learnFromSong("src/sample/New MIDI File 2.mid");
+            Weights.learnFromSong("src/sample/New MIDI File 3.mid");
+            Weights.learnFromSong("src/sample/New MIDI File 4.mid");
+            Weights.learnFromSong("src/sample/New MIDI File 5.mid");
         } catch (InvalidMidiDataException | IOException e) {
             e.printStackTrace();
         }
