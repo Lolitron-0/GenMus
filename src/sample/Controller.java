@@ -21,7 +21,7 @@ public class Controller implements Initializable {
     public ChoiceBox<Integer> n2Choose;
 
 
-    public void onClick(ActionEvent actionEvent) throws InterruptedException, MidiUnavailableException {
+    public void onClick(ActionEvent actionEvent) throws InterruptedException, MidiUnavailableException, InvalidMidiDataException, IOException {
         Weights.generate(n1Choose.getValue(), n2Choose.getValue(),(int)scaleChooser.getValue(),16);
     }
 
