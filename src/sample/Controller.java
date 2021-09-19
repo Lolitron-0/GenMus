@@ -23,6 +23,10 @@ public class Controller implements Initializable {
 
     public void onClick(ActionEvent actionEvent) throws InterruptedException, MidiUnavailableException, InvalidMidiDataException, IOException {
         Weights.generate(n1Choose.getValue(), n2Choose.getValue(),(int)scaleChooser.getValue(),16);
+        //Node n=new Node(1),n2=new Node(2);
+        //Connection c=new Connection(n,n2,0.5);
+        //n.getOutputConnections().add(c);
+        //n.engage();
     }
 
     @Override
