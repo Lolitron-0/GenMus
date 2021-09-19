@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+
+//main class to manage form  (needs Scene builder app all instructions here - https://maxsite.org/page/visual-programming-java)
 public class Controller implements Initializable {
     public ChoiceBox<Integer> n1Choose;
     public Button btnGener;
