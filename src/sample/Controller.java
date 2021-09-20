@@ -38,16 +38,17 @@ public class Controller implements Initializable {
         n2Choose.setItems(cursors);
         n1Choose.setValue(cursors.get(0));
         n2Choose.setValue(cursors.get(0));
-        System.out.println(n1Choose.getValue());
-        try {
-            Weights.learnFromSong("src/sample/New MIDI File 1.mid");
-            Weights.learnFromSong("src/sample/New MIDI File 2.mid");
-            Weights.learnFromSong("src/sample/New MIDI File 3.mid");
-            Weights.learnFromSong("src/sample/New MIDI File 4.mid");
-            Weights.learnFromSong("src/sample/New MIDI File 5.mid");
-        } catch (InvalidMidiDataException | IOException e) {
-            e.printStackTrace();
-        }
+        //try {
+        //    Weights.learnFromSong("src/sample/New MIDI File 1.mid");
+        //    Weights.learnFromSong("src/sample/New MIDI File 2.mid");
+        //    Weights.learnFromSong("src/sample/New MIDI File 3.mid");
+        //    Weights.learnFromSong("src/sample/New MIDI File 4.mid");
+        //    Weights.learnFromSong("src/sample/New MIDI File 5.mid");
+        //} catch (InvalidMidiDataException | IOException e) {
+        //    e.printStackTrace();
+        //}
+
+        Network net= new Network(16,1,16);
 
     }
 }

@@ -11,6 +11,7 @@ public class Node {
     private int layer;
     private double inputSum=5;
     private double outputValue;
+    private double delta;
 
 
     public Node(int no) {
@@ -76,6 +77,10 @@ public class Node {
         return outputValue;
     }
 
+    public double getDelta() {
+        return delta;
+    }
+
     public void setOutputConnections(ArrayList<Connection> outputConnections) {
         this.outputConnections = outputConnections;
     }
@@ -94,5 +99,9 @@ public class Node {
 
     public void setOutputValue(double outputValue) {
         this.outputValue = outputValue;
+    }
+
+    public void setDelta(double delta) {
+        this.delta = delta;
     }
 }
