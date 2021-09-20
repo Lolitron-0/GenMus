@@ -12,6 +12,8 @@ public class Network {
     int layers=3;
     int nextNode=0;
     int biasNode;
+    double learningRate=0.7;
+    double alphaMomentum=0.4;
     ArrayList<Node> network=new ArrayList<>();
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -32,7 +34,7 @@ public class Network {
         {
             nodes.add(new Node(i+inputs));
             nextNode++;
-            nodes.get(i+inputs).setLayer(1);
+            nodes.get(i+inputs).setLayer(layers-1);
         }
 
         nodes.add(new Node(nextNode));
@@ -40,7 +42,7 @@ public class Network {
         biasNode=nextNode;
         nextNode++;
 
-        for(int hids =2;hids<layers;hids++){
+        for(int hids =1;hids<layers-1;hids++){
             for(int i=0;i<inHidden;i++){
                 nodes.add(new Node(nextNode));
                 nodes.get(nextNode).setLayer(hids);
@@ -84,7 +86,7 @@ public class Network {
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    //refresh connections (probably not needed)
+    //refresh connections
     void connectNodes()
     {
         for(int i=0;i<nodes.size();i++) {
@@ -97,10 +99,30 @@ public class Network {
         }
     }
 
-    public void countDeltas(ArrayList<Double> ideal)
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    //update all synapse and neurons parameters, update weights  (also checking convergence)
+    public void countDeltas(double ideal)
     {
         for(int i=0;i<outputs;i++){
-            nodes.get(inputs+i).setDelta((ideal.get(i)-nodes.get(inputs+i).getOutputValue())    *    ((1-nodes.get(inputs+i).getOutputValue())*nodes.get(inputs+i).getOutputValue()));
+            double delt1=(ideal-nodes.get(inputs+i).getOutputValue());
+            double delt2=((1-nodes.get(inputs+i).getOutputValue())*nodes.get(inputs+i).getOutputValue());
+            double delt=delt1*delt2; //ОЧЕНЬ МАЛЕНЬКАЯ
+            nodes.get(inputs+i).setDelta(delt);  //delta_o = (out_ideal - out_actual)*derivative(in)
+        }
+        System.out.println("Err: "+countError(ideal));
+
+        ArrayList<Node> nodesInLayer;
+        for(int layer=layers-2;layer>=0;layer--){
+            nodesInLayer=getListOfLayerNodes(layer);
+            for (Node node : nodesInLayer) {
+                node.setDelta(((1 - node.getOutputValue()) * node.getOutputValue()) * node.getSumOfOutgoingDeltasWeights());  //delta = derivative(in) * E(w_i*delta_i)
+                for (Connection connection : node.getOutputConnections()) {
+                    connection.setGradient(node.getOutputValue()*connection.getToNode().getDelta()); // GRAD = delta_b * out_a
+                    connection.setLastChange((connection.getGradient()*learningRate)+(alphaMomentum*connection.getLastChange()));   //wchange = learningRate*GRAD + momentum*prevChange
+                    connection.setWeight(connection.getWeight()+connection.getLastChange());
+                }
+            }
         }
     }
 
@@ -179,6 +201,31 @@ public class Network {
             return true;
         }
         return false;
+    }
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    private double countError(double ideal)
+    {
+        double sum=0;
+        for(int i=0;i<outputs;i++){
+            sum+=Math.pow(ideal-nodes.get(inputs+i).getOutputValue(),2);
+        }
+
+        return sum/outputs;
+    }
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    ArrayList<Node> getListOfLayerNodes(int layer)
+    {
+        ArrayList<Node> result=new ArrayList<>();
+        for(int i =0;i<nodes.size();i++){
+            if(nodes.get(i).getLayer()==layer)
+                result.add(nodes.get(i));
+        }
+
+        return result;
     }
 
 }

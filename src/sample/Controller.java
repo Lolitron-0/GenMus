@@ -12,6 +12,7 @@ import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 
@@ -21,14 +22,20 @@ public class Controller implements Initializable {
     public Button btnGener;
     public Slider scaleChooser;
     public ChoiceBox<Integer> n2Choose;
+    public Button btnGood;
+    public Button btnBad;
+    Network net;
 
 
     public void onClick(ActionEvent actionEvent) throws InterruptedException, MidiUnavailableException, InvalidMidiDataException, IOException {
-        Weights.generate(n1Choose.getValue(), n2Choose.getValue(),(int)scaleChooser.getValue(),16);
+        ArrayList<Double> vision=Weights.generate(n1Choose.getValue(), n2Choose.getValue(),(int)scaleChooser.getValue(),16);
         //Node n=new Node(1),n2=new Node(2);
         //Connection c=new Connection(n,n2,0.5);
         //n.getOutputConnections().add(c);
         //n.engage();
+        System.out.println(net.feedForward(vision).get(0));
+        btnGood.setDisable(false);
+        btnBad.setDisable(false);
     }
 
     @Override
@@ -38,17 +45,30 @@ public class Controller implements Initializable {
         n2Choose.setItems(cursors);
         n1Choose.setValue(cursors.get(0));
         n2Choose.setValue(cursors.get(0));
-        //try {
-        //    Weights.learnFromSong("src/sample/New MIDI File 1.mid");
-        //    Weights.learnFromSong("src/sample/New MIDI File 2.mid");
-        //    Weights.learnFromSong("src/sample/New MIDI File 3.mid");
-        //    Weights.learnFromSong("src/sample/New MIDI File 4.mid");
-        //    Weights.learnFromSong("src/sample/New MIDI File 5.mid");
-        //} catch (InvalidMidiDataException | IOException e) {
-        //    e.printStackTrace();
-        //}
+        //Weights.randomWeights();
+        try {
+            Weights.learnFromSong("src/sample/New MIDI File 1.mid");
+            Weights.learnFromSong("src/sample/New MIDI File 2.mid");
+            Weights.learnFromSong("src/sample/New MIDI File 3.mid");
+            Weights.learnFromSong("src/sample/New MIDI File 4.mid");
+            Weights.learnFromSong("src/sample/New MIDI File 5.mid");
+        } catch (InvalidMidiDataException | IOException e) {
+            e.printStackTrace();
+        }
 
-        Network net= new Network(16,1,16);
+        net= new Network(16,1,16);
 
+    }
+
+    public void onClckGood(ActionEvent actionEvent) {
+        net.countDeltas(1);
+        btnGood.setDisable(true);
+        btnBad.setDisable(true);
+    }
+
+    public void onClickBad(ActionEvent actionEvent) {
+        net.countDeltas(0);
+        btnGood.setDisable(true);
+        btnBad.setDisable(true);
     }
 }

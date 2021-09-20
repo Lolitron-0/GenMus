@@ -13,6 +13,7 @@ public class Node {
     private double outputValue;
     private double delta;
 
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     public Node(int no) {
         this.no = no;
@@ -33,7 +34,9 @@ public class Node {
         }
     }
 
-    //obvious (probably not used)
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    //obvious
     boolean isConnectedTo(Node node) {
         if (node.layer == layer) {
             return false;
@@ -55,6 +58,19 @@ public class Node {
 
         return false;
     }
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    public double getSumOfOutgoingDeltasWeights()
+    {
+        double res=0.;
+        for (Connection outputConnection : outputConnections) {
+            res += outputConnection.getWeight() * outputConnection.getToNode().getDelta();
+        }
+        return res;
+    }
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
     public ArrayList<Connection> getOutputConnections() {
