@@ -1,9 +1,11 @@
 package sample;
 
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
-//obviously neuron
+
 public class Node {
 
     private ArrayList<Connection> outputConnections=new ArrayList<>();
@@ -20,7 +22,9 @@ public class Node {
         layer=1;
     }
 
-    //method called during feed forward (use activation function & send output value to all next nodes)
+    /**
+     * Calls activation function and pass output value to the next node
+     */
     public void engage()
     {
         if(layer!=0)
@@ -36,8 +40,12 @@ public class Node {
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    //obvious
-    boolean isConnectedTo(Node node) {
+    /**
+     *Checks if a node connected to another
+     * @param node node to check connection with
+     * @return boolean of the result
+     */
+    boolean isConnectedTo(@NotNull Node node) {
         if (node.layer == layer) {
             return false;
         }
@@ -61,6 +69,10 @@ public class Node {
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+    /**
+     * Counting specific value for gradient
+     * @return sum of all weights*deltas for every output connection
+     */
     public double getSumOfOutgoingDeltasWeights()
     {
         double res=0.;
