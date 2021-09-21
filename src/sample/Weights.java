@@ -97,7 +97,14 @@ public class Weights
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    //generates a melody starting with n1 & n2 with phrase length of [phrase] (exports a MIDI file as src/sample/result.mid)
+    /**
+     * Generates a melody, exports a MIDI file as src/sample/result.mid
+     * @param n1 First note
+     * @param n2 Second note
+     * @param ton shift of the scale
+     * @param phrase length
+     * @return normalized array of output notes
+     */
     public static ArrayList<Double> generate(int n1, int n2, int ton, int phrase) throws MidiUnavailableException, InterruptedException, InvalidMidiDataException, IOException {
         Synthesizer synth = MidiSystem.getSynthesizer();
         synth.open();

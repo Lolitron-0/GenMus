@@ -12,8 +12,9 @@ public class Network {
     int layers=3;
     int nextNode=0;
     int biasNode;
-    double learningRate=0.9;
-    double alphaMomentum=0.5;
+    double learningRate=0.8;
+    double alphaMomentum=0.6;
+
     ArrayList<Node> network=new ArrayList<>();
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
