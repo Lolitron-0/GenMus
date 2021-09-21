@@ -76,16 +76,13 @@ public class Controller implements Initializable {
 
 
 
-       series = new XYSeries("error(iteration)");
-
-
-
-
 
         net= new Network(16,1,8);
 
 
 
+
+        series = new XYSeries("error(iteration)");
         double sum=0;
         int g=0;
         while(g++<1000) {
