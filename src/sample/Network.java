@@ -102,7 +102,7 @@ public class Network {
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     //update all synapse and neurons parameters, update weights  (also checking convergence)
-    public void countDeltas(double ideal)
+    public double countDeltas(double ideal)
     {
         for(int i=0;i<outputs;i++){
             double delt1=(ideal-nodes.get(inputs+i).getOutputValue());
@@ -110,7 +110,7 @@ public class Network {
             double delt=delt1*delt2; //ОЧЕНЬ МАЛЕНЬКАЯ
             nodes.get(inputs+i).setDelta(delt);  //delta_o = (out_ideal - out_actual)*derivative(in)
         }
-        System.out.println("Err: "+countError(ideal));
+        double err=countError(ideal);
 
         ArrayList<Node> nodesInLayer;
         for(int layer=layers-2;layer>=0;layer--){
@@ -124,6 +124,8 @@ public class Network {
                 }
             }
         }
+
+        return err;
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
