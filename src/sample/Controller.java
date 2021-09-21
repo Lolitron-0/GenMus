@@ -43,6 +43,15 @@ public class Controller implements Initializable {
         btnGood.setDisable(false);
         btnBad.setDisable(false);
 
+
+        ArrayList<Double> test = new ArrayList<>();
+
+        for (int i = 0; i < 16; i++) {
+            test.add((double) Math.round(Math.random()));
+        }
+        btnGener.setText(test.get(0).toString());
+        net.feedForward(test);
+
     }
 
     //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -80,7 +89,7 @@ public class Controller implements Initializable {
 
 
 
-        while(iteration++<1000) {
+        while(iteration++<200) {
             ArrayList<Double> test = new ArrayList<>();
 
             for (int i = 0; i < 16; i++) {
@@ -92,13 +101,14 @@ public class Controller implements Initializable {
             series.add(iteration, net.countDeltas(test.get(0)));
         }
 
+
         chart = ChartFactory.createXYLineChart("error = msi(out)", "iteration", "error",
                     new XYSeriesCollection(series),
                     PlotOrientation.VERTICAL,
                 true, true, true);
 
         frame = new JFrame("Convergence meter");
-        frame.getContentPane().add(new ChartPanel(chart));
+        frame.getContentPane().add(new ChartPanel(chart),0);
         frame.setSize(1000,700);
         frame.show();
 
@@ -106,8 +116,8 @@ public class Controller implements Initializable {
 
     //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    public void onClckGood(ActionEvent actionEvent) {
-
+    public void onClickGood(ActionEvent actionEvent) {
+        updateError(1);
         btnBad.setDisable(true);
         btnGood.setDisable(true);
     }
@@ -115,17 +125,23 @@ public class Controller implements Initializable {
     //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     public void onClickBad(ActionEvent actionEvent) {
-        net.countDeltas(0);
+        updateError(0);
         btnBad.setDisable(true);
         btnGood.setDisable(true);
     }
 
     //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    public void updateError(double newError,double ideal)
+    public void updateError(double ideal)
     {
         iteration++;
         series.add(iteration,net.countDeltas(ideal));
-
+        chart = ChartFactory.createXYLineChart("error = msi(out)", "iteration", "error",
+                new XYSeriesCollection(series),
+                PlotOrientation.VERTICAL,
+                true, true, true);
+        frame.getContentPane().remove(0);
+        frame.getContentPane().add(new ChartPanel(chart),0);
+        frame.show();
     }
 }

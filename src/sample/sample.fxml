@@ -11,7 +11,7 @@
       <ChoiceBox fx:id="n2Choose" layoutX="14.0" layoutY="65.0" prefWidth="150.0" />
       <Button fx:id="btnGener" layoutX="139.0" layoutY="296.0" mnemonicParsing="false" onAction="#onClick" prefHeight="25.0" prefWidth="323.0" text="Button" />
       <Slider fx:id="scaleChooser" blockIncrement="1.0" layoutX="167.0" layoutY="29.0" majorTickUnit="1.0" max="12.0" min="-12.0" minorTickCount="0" prefHeight="46.0" prefWidth="428.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
-      <Button fx:id="btnGood" layoutX="141.0" layoutY="347.0" mnemonicParsing="false" onAction="#onClckGood" prefHeight="25.0" prefWidth="158.0" text="Good" />
+      <Button fx:id="btnGood" layoutX="141.0" layoutY="347.0" mnemonicParsing="false" onAction="#onClickGood" prefHeight="25.0" prefWidth="158.0" text="Good" />
       <Button fx:id="btnBad" layoutX="307.0" layoutY="347.0" mnemonicParsing="false" onAction="#onClickBad" prefHeight="25.0" prefWidth="158.0" text="Bad" />
    </children>
 </Pane>
