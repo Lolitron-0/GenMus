@@ -11,7 +11,6 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
@@ -32,30 +31,25 @@ public class Controller implements Initializable {
     public Button btnGood;
     public Button btnBad;
     Network net;
-    XYSeries series;
+    int iteration=0;
 
+    XYSeries series;
+    JFreeChart chart;
+    JFrame frame;
 
     public void onClick(ActionEvent actionEvent) throws InterruptedException, MidiUnavailableException, InvalidMidiDataException, IOException {
-        //ArrayList<Double> vision=Weights.generate(n1Choose.getValue(), n2Choose.getValue(),(int)scaleChooser.getValue(),16);
-        //Node n=new Node(1),n2=new Node(2);
-        //Connection c=new Connection(n,n2,0.5);
-        //n.getOutputConnections().add(c);
-        //n.engage();
+        ArrayList<Double> vision=Weights.generate(n1Choose.getValue(), n2Choose.getValue(),(int)scaleChooser.getValue(),16);
 
-       // btnGood.setDisable(false);
-        //btnBad.setDisable(false);
-
-
-
-        for(float i = 0; i < Math.PI; i+=0.1){
-            series.add(i, Math.sin(i));
-        }
-
-
-
+        btnGood.setDisable(false);
+        btnBad.setDisable(false);
 
     }
 
+    //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    /**
+     * method called when form launches
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ObservableList<Integer> cursors = FXCollections.observableArrayList(60, 62, 64,65,67,69);
@@ -83,41 +77,55 @@ public class Controller implements Initializable {
 
 
         series = new XYSeries("error(iteration)");
-        double sum=0;
-        int g=0;
-        while(g++<1000) {
+
+
+
+        while(iteration++<1000) {
             ArrayList<Double> test = new ArrayList<>();
+
             for (int i = 0; i < 16; i++) {
                 test.add((double) Math.round(Math.random()));
             }
+
             System.out.println(net.feedForward(test).get(0));
-            sum+=net.countDeltas(test.get(0));
-            if(g%1==0){
-                series.add(g, sum/1);
-                sum=0;
-            }
+
+            series.add(iteration, net.countDeltas(test.get(0)));
         }
 
-        XYDataset xyDataset = new XYSeriesCollection(series);
-        JFreeChart chart = ChartFactory
-                .createXYLineChart("error = msi(out)", "iteration", "error",
-                        xyDataset,
-                        PlotOrientation.VERTICAL,
-                        true, true, true);
-        JFrame frame =
-                new JFrame("MinimalStaticChart");
-        frame.getContentPane()
-                .add(new ChartPanel(chart));
+        chart = ChartFactory.createXYLineChart("error = msi(out)", "iteration", "error",
+                    new XYSeriesCollection(series),
+                    PlotOrientation.VERTICAL,
+                true, true, true);
+
+        frame = new JFrame("Convergence meter");
+        frame.getContentPane().add(new ChartPanel(chart));
         frame.setSize(1000,700);
         frame.show();
 
     }
 
+    //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
     public void onClckGood(ActionEvent actionEvent) {
-        net.countDeltas(1);
+
+        btnBad.setDisable(true);
+        btnGood.setDisable(true);
     }
+
+    //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     public void onClickBad(ActionEvent actionEvent) {
         net.countDeltas(0);
+        btnBad.setDisable(true);
+        btnGood.setDisable(true);
+    }
+
+    //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    public void updateError(double newError,double ideal)
+    {
+        iteration++;
+        series.add(iteration,net.countDeltas(ideal));
+
     }
 }
