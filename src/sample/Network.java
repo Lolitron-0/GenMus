@@ -12,8 +12,8 @@ public class Network {
     int layers=3;
     int nextNode=0;
     int biasNode;
-    double learningRate=0.7;
-    double alphaMomentum=0.4;
+    double learningRate=0.9;
+    double alphaMomentum=0.5;
     ArrayList<Node> network=new ArrayList<>();
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -60,7 +60,11 @@ public class Network {
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    //get a list of outputs from list of inputs
+    /**
+     * Go through network and engage all nodes
+     * @param inputValues list of inputs (size of [inputs])
+     * @return list of outputs (size of [outputs])
+     */
     public ArrayList<Double> feedForward(ArrayList<Double> inputValues)
     {
         for(int i=0;i<inputs;i++)
@@ -86,7 +90,9 @@ public class Network {
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    //refresh connections
+    /**
+     * Refresh connections
+     */
     void connectNodes()
     {
         for(int i=0;i<nodes.size();i++) {
@@ -101,7 +107,11 @@ public class Network {
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    //update all synapse and neurons parameters, update weights  (also checking convergence)
+    /**
+     * Update all synapse and neurons parameters (deltas for nodes, grad and change for weights)  (also checking convergence)
+     * @param ideal ideal value expected from network
+     * @return error of network (MSI)
+     */
     public double countDeltas(double ideal)
     {
         for(int i=0;i<outputs;i++){
@@ -130,7 +140,9 @@ public class Network {
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    //sets nodes as they should calculate during feed forward (probably called once)
+    /**
+     * Form array of nodes as they should be considered during feed forward
+     */
     void generateNetwork()
     {
         connectNodes();
@@ -144,7 +156,9 @@ public class Network {
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    //adds connection between 2 random connections
+    /**
+     * Adds connection between 2 random nodes
+     */
     void addConnection()
     {
         if(fullyConnected())
@@ -179,7 +193,10 @@ public class Network {
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    //obvious
+    /**
+     * Checks if connections can not be added anymore
+     * @return boolean of the result
+     */
     boolean fullyConnected()
     {
         int maxConnections = 0;
@@ -207,6 +224,11 @@ public class Network {
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+    /**
+     * Get the network error
+     * @param ideal value expected from network
+     * @return error of the network counted with MSI
+     */
     private double countError(double ideal)
     {
         double sum=0;
@@ -219,6 +241,11 @@ public class Network {
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+    /**
+     * Get an array of nodes in a specific layer
+     * @param layer chosen layer
+     * @return array of nodes in a specific layer
+     */
     ArrayList<Node> getListOfLayerNodes(int layer)
     {
         ArrayList<Node> result=new ArrayList<>();

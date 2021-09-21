@@ -92,8 +92,8 @@ public class Controller implements Initializable {
             }
             System.out.println(net.feedForward(test).get(0));
             sum+=net.countDeltas(test.get(0));
-            if(g%5==0){
-                series.add(g, sum/5);
+            if(g%1==0){
+                series.add(g, sum/1);
                 sum=0;
             }
         }
