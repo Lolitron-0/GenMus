@@ -38,7 +38,7 @@ public class Controller implements Initializable {
     JFrame frame;
 
     public void onClick(ActionEvent actionEvent) throws InterruptedException, MidiUnavailableException, InvalidMidiDataException, IOException {
-        ArrayList<Double> vision=Weights.generate(n1Choose.getValue(), n2Choose.getValue(),(int)scaleChooser.getValue(),16);
+        //ArrayList<Double> vision=Weights.generate(n1Choose.getValue(), n2Choose.getValue(),(int)scaleChooser.getValue(),16);
 
         btnGood.setDisable(false);
         btnBad.setDisable(false);
@@ -57,16 +57,16 @@ public class Controller implements Initializable {
         n2Choose.setItems(cursors);
         n1Choose.setValue(cursors.get(0));
         n2Choose.setValue(cursors.get(0));
-        //Weights.randomWeights();
-        try {
-            Weights.learnFromSong("src/sample/New MIDI File 1.mid");
-            Weights.learnFromSong("src/sample/New MIDI File 2.mid");
-            Weights.learnFromSong("src/sample/New MIDI File 3.mid");
-            Weights.learnFromSong("src/sample/New MIDI File 4.mid");
-            Weights.learnFromSong("src/sample/New MIDI File 5.mid");
-        } catch (InvalidMidiDataException | IOException e) {
-            e.printStackTrace();
-        }
+        Weights.randomWeights();
+        //try {
+        //    Weights.learnFromSong("src/sample/New MIDI File 1.mid");
+        //    Weights.learnFromSong("src/sample/New MIDI File 2.mid");
+        //    Weights.learnFromSong("src/sample/New MIDI File 3.mid");
+        //    Weights.learnFromSong("src/sample/New MIDI File 4.mid");
+        //    Weights.learnFromSong("src/sample/New MIDI File 5.mid");
+        //} catch (InvalidMidiDataException | IOException e) {
+        //    e.printStackTrace();
+        //}
 
 
 

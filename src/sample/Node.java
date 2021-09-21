@@ -1,8 +1,6 @@
 package sample;
 
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 
 
@@ -45,7 +43,7 @@ public class Node {
      * @param node node to check connection with
      * @return boolean of the result
      */
-    boolean isConnectedTo(@NotNull Node node) {
+    boolean isConnectedTo(Node node) {
         if (node.layer == layer) {
             return false;
         }
